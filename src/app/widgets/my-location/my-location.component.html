@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button></ion-back-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+	<ion-item>
+		<ion-button color="primary" (click)="saveLocations()">Clock In</ion-button>
+	</ion-item>	
+	<ion-item *ngFor="let booking of myLocation;let i = index;" class="user-list">
+      <ion-label>
+        <p>
+          Latitude: {{booking.current_location.latitude}}
+        </p>
+        <p>
+          longitude: {{booking.current_location.longitude}}
+        </p>
+        <p>
+          Time: {{booking.current_time}}
+        </p>
+      </ion-label>
+    </ion-item>
+</ion-content>

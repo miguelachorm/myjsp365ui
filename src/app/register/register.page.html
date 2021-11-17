@@ -1,0 +1,52 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+</ion-header>
+<ion-content>
+  <ion-row>
+    <ion-col>
+      <ion-card>
+        <ion-card-header>
+          <ion-card-title color="terciary">New Users</ion-card-title>
+        </ion-card-header>
+        <ion-card-content padding>
+          <ion-list>
+            <ion-item>
+              <ion-label position="floating">Email</ion-label>
+              <ion-input type="email" [(ngModel)]="username"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Password</ion-label>
+              <ion-input type="password" [(ngModel)]="password"></ion-input>
+            </ion-item>
+            <ion-item>
+              <ion-label position="floating">Confirm Password</ion-label>
+              <ion-input type="password" [(ngModel)]="cpassword"></ion-input>
+            </ion-item>
+            <ion-item-divider>
+            </ion-item-divider>
+            <ion-item>
+              <ion-label>User Role</ion-label>
+              <ion-select interface="popover" [(ngModel)]="role">
+                <ion-select-option value="owner">Franchise Owner</ion-select-option>
+                <ion-select-option value="admin">Admin</ion-select-option>
+                <ion-select-option value="staff">Staff</ion-select-option>
+              </ion-select>
+            </ion-item>
+            <ion-item *ngIf="role !== 'owner' && role !==''">
+              <ion-label position="floating">Approving Email</ion-label>
+              <ion-input type="email" [(ngModel)]="approvingEmail"></ion-input>
+            </ion-item>
+          </ion-list>
+          <ion-button fill="solid" expand="block" color="primary" (click)="register()">Signup</ion-button>
+        </ion-card-content>
+        <ion-item routerLink="/login">
+          <ion-icon name="warning" slot="start"></ion-icon>
+          <ion-label>Existing User?</ion-label>
+        </ion-item>
+      </ion-card>
+    </ion-col>
+  </ion-row>
+</ion-content>
+

@@ -1,0 +1,61 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-back-button defaultHref="/"></ion-back-button>
+    </ion-buttons>
+    <ion-title>Member Details</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content padding>
+  <ion-card>
+    <ion-card-content>
+      <ion-card-subtitle>Member Info</ion-card-subtitle>
+      <ion-item>
+        <ion-label position="stacked">Name</ion-label>
+        <ion-input required [(ngModel)]="member.name" (ionChange)="fieldsValidator()"></ion-input>
+      </ion-item>
+    
+      <ion-item *ngIf="member.role == 'staff'">
+        <ion-label position="stacked">Company Name</ion-label>
+        <ion-input [(ngModel)]="member.companyName"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label position="stacked">Phone</ion-label>
+        <ion-input [(ngModel)]="member.phone"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label position="stacked">Cell</ion-label>
+        <ion-input [(ngModel)]="member.cell"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label position="stacked">Role</ion-label>
+        <ion-input [disabled]="true" [(ngModel)]="member.role"></ion-input>
+      </ion-item>
+    
+      <ion-item>
+        <ion-label>Status</ion-label>
+        <ion-select [disabled]="member.role == 'owner'" interface="popover" [(ngModel)]="member.status">
+          <ion-select-option value="pending">Pending</ion-select-option>
+          <ion-select-option value="approved">Approved</ion-select-option>
+          <ion-select-option value="active">Active</ion-select-option>
+          <ion-select-option value="suspended">Suspended</ion-select-option>
+          <ion-select-option value="terminated">Terminated</ion-select-option>
+        </ion-select>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+
+<ion-footer *ngIf="member.id">
+  <ion-row no-padding text-center>
+    <ion-col size="6">
+      <ion-button expand="block" fill="outline" color="danger" (click)="deleteMember()"> Delete </ion-button>
+    </ion-col>
+    <ion-col size="6">
+      <ion-button expand="block" fill="solid" color="success" (click)="updateMember()"> Update </ion-button>
+    </ion-col>
+  </ion-row>
+</ion-footer>

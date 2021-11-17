@@ -1,0 +1,57 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon name="cloud-done"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button  (click)="onLogOut()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Staff</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-card>
+    <ion-card-content>
+      <ion-card-subtitle>Active Staff</ion-card-subtitle>
+      <ion-list>
+        <ng-container *ngFor="let member of (staff | async)">
+          <ion-item button *ngIf="member.status == 'active'" [routerLink]="['member', member.id]">
+            {{ member.name }}
+          </ion-item>
+        </ng-container>
+    </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-card-subtitle>Pending Staff</ion-card-subtitle>
+      <ion-list>
+        <ng-container *ngFor="let member of (staff | async)">
+          <ion-item button *ngIf="member.status == 'pending'" [routerLink]="['member', member.id]">
+            {{ member.email }}
+          </ion-item>
+        </ng-container>
+    </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card>
+    <ion-card-content>
+      <ion-card-subtitle>Other Staff</ion-card-subtitle>
+      <ion-list>
+        <ng-container *ngFor="let member of (staff | async)">
+          <ion-item button *ngIf="member.status != 'pending' && member.status != 'active'" [routerLink]="['member', member.id]">
+            {{ member.email }}
+          </ion-item>
+        </ng-container>
+    </ion-list>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+

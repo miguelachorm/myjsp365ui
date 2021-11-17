@@ -3,6 +3,18 @@
 
 /** Ionic CSS Variables **/
 :root {
+  ion-item {
+    font-size: 14px;
+
+  }
+
+  ion-tab-button {
+    font-size: 14px;
+    }
+    
+  ion-button {
+    font-size: 14px;
+  }
   /** primary **/
   --ion-color-primary: #3880ff;
   --ion-color-primary-rgb: 56, 128, 255;

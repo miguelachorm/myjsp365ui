@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-toolbar color="tertiary">
+    <ion-buttons slot="start">
+      <ion-button>
+        <ion-icon name="cloud-done"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-buttons slot="end">
+      <ion-button (click)="onLogOut()">
+        <ion-icon name="log-out"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title>Dashboard</ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <app-my-location></app-my-location>
+  <app-dated-accounts></app-dated-accounts>
+  <app-business-stats></app-business-stats>
+  <ion-footer *ngIf="user.role == 'staff'">
+    <ion-row no-padding text-center>
+      <ion-col size="6">
+        <ion-button expand="block" fill="solid" color="secondary" (click)="clockIn()"> Clock In </ion-button>
+      </ion-col>
+      <ion-col size="6">
+        <ion-button expand="block" fill="solid" color="secondary" (click)="clockOut()"> Clock Out </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-footer>
+</ion-content>

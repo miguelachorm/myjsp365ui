@@ -1,5 +1,7 @@
 {
   "name": "myjsp365ui",
-  "integrations": {},
+  "integrations": {
+    "capacitor": {}
+  },
   "type": "angular"
 }

@@ -1,0 +1,342 @@
+<ion-header>
+  <ion-toolbar>
+    <ion-title>Register</ion-title>
+  </ion-toolbar>
+  <!-- <ion-item>
+    <ion-label>Your Role:</ion-label>
+    <ion-select
+      color="primary"
+      placeholder="Select One"
+      (ionChange)="roleChanged($event)"
+      [(ngModel)]="role"
+    >
+      <ion-select-option value="owner">Franchise Owner</ion-select-option>
+      <ion-select-option value="admin">Franchise Admin</ion-select-option>
+      <ion-select-option value="vendor">Vendor</ion-select-option>
+    </ion-select>
+  </ion-item> -->
+
+  <ion-segment
+    [(ngModel)]="segment"
+    *ngIf="user.role !== ''"
+    value="company"
+  >
+    <ion-segment-button value="company" *ngIf="user.role === 'owner'">
+      <ion-icon color="secondary" name="checkmark-outline" *ngIf="fFormReady"></ion-icon>
+      <ion-icon color="primary" name="earth-outline" *ngIf="!fFormReady"></ion-icon>
+      <ion-label>Franchise</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="user">
+      <ion-icon color="secondary" name="checkmark-outline" *ngIf="oFormReady"></ion-icon>
+      <ion-icon color="primary" name="person-outline" *ngIf="!oFormReady"></ion-icon>
+      <ion-label>Personal</ion-label>
+    </ion-segment-button>
+    <ion-segment-button color="secondary" value="billing" *ngIf="user.role === 'owner'">
+      <ion-icon color="secondary" name="checkmark-outline" *ngIf="bFormReady"></ion-icon>
+      <ion-icon color="primary" name="cash-outline" *ngIf="!bFormReady"></ion-icon>
+      <ion-label>Billing</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+<ion-content>
+  <ion-card *ngIf="segment === 'company'">
+    <ion-card-content padding>
+      <ion-list>
+        <ion-item>
+          <ion-input
+            type="text"
+            maxlength="100"
+            placeholder="Your Company Name"
+            required
+            [(ngModel)]="franchise.name"
+            (ionChange)="validateFranchiseForm()"
+          >
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            type="text"
+            maxlength="100"
+            placeholder="Franchise Parent Name"
+            [(ngModel)]="franchise.parent"
+            (ionChange)="validateFranchiseForm()"
+          >
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            type="text"
+            maxlength="20"
+            placeholder="Franchise Assigned Number"
+            [(ngModel)]="franchise.parentRef"
+            (ionChange)="validateFranchiseForm()"
+          >
+          </ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="segment === 'company'">
+    <ion-card-content padding>
+      <ion-list>
+        <ion-item>
+          <ion-input
+            type="text"
+            maxlength="3"
+            placeholder="Franchise Standard Royalty %"
+            [(ngModel)]="franchise.royalty"
+            (ionChange)="validateFranchiseForm()"
+          >
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            type="text"
+            maxlength="3"
+            placeholder="Additional Special Work Royalty %"
+            [(ngModel)]="franchise.addSvcRoyalty"
+            (ionChange)="validateFranchiseForm()"
+          >
+          </ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="segment === 'user'">
+    <ion-card-content padding>
+      <ion-list>
+        <ion-item *ngIf="user.role === 'staff'">
+          <ion-input
+            type="text"
+            maxlength="100"
+            placeholder="Your Company Name"
+            [(ngModel)]="user.companyName"
+            (ionChange)="validateUserForm()"
+          >
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            type="text"
+            maxlength="100"
+            placeholder="Your Name"
+            [(ngModel)]="user.name"
+            (ionChange)="validateUserForm()"
+          >
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            type="tel"
+            maxlength="10"
+            placeholder="Office Phone"
+            [(ngModel)]="user.phone"
+            (ionChange)="validateUserForm()"
+          >
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            type="tel"
+            maxlength="10"
+            placeholder="Cell Phone"
+            [(ngModel)]="user.cell"
+            (ionChange)="validateUserForm()"
+          ></ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            type="email"
+            maxlength="50"
+            placeholder="Email"
+            [disabled]="true"
+            [(ngModel)]="user.email"
+          >
+          </ion-input>
+        </ion-item>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+
+  <ion-card *ngIf="segment === 'billing'">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Billing Address
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content padding>
+      <ion-list>
+        <ion-item>
+          <ion-input
+            type="text"
+            maxlength="100"
+            placeholder="Address Line 1"
+            [(ngModel)]="billing.addressl1"
+            (ionChange)="validateBillingForm()"
+          ></ion-input>
+        </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input
+                type="text"
+                maxlength="30"
+                placeholder="City"
+                [(ngModel)]="billing.city"
+                (ionChange)="validateBillingForm()"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-input
+                type="text"
+                maxlength="2"
+                placeholder="State"
+                [(ngModel)]="billing.state"
+                (ionChange)="validateBillingForm()"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-input
+                type="text"
+                maxlength="5"
+                placeholder="Zip Code"
+                [(ngModel)]="billing.zip"
+                (ionChange)="validateBillingForm()"
+              >
+              </ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="segment === 'billing'">
+    <ion-card-header>
+      <ion-card-subtitle>
+        Credit Card Information
+      </ion-card-subtitle>
+    </ion-card-header>
+    <ion-card-content padding>
+      <ion-list>
+        <ion-item>
+          <ion-input
+            type="text"
+            maxlength="30"
+            placeholder="Cardholder Name"
+            required
+            [(ngModel)]="billing.ccName"
+            (ionChange)="validateBillingForm()"
+          >
+          </ion-input>
+        </ion-item>
+        <ion-item>
+          <ion-input
+            type="text"
+            maxlength="16"
+            placeholder="Credit Card Number"
+            required
+            [(ngModel)]="billing.ccNumber"
+            (ionChange)="validateBillingForm()"
+          >
+          </ion-input>
+        </ion-item>
+        <ion-row>
+          <ion-col>
+            <ion-item>
+              <ion-input
+                type="text"
+                maxlength="2"
+                placeholder="Exp mm"
+                required
+                [(ngModel)]="billing.ccExpMonth"
+                (ionChange)="validateBillingForm()"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-input
+                type="text"
+                maxlength="4"
+                placeholder="yyyy"
+                required
+                [(ngModel)]="billing.ccExpYear"
+                (ionChange)="validateBillingForm()"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+          <ion-col>
+            <ion-item>
+              <ion-input
+                placeholder="CSV Number"
+                type="text"
+                required
+                [(ngModel)]="billing.ccCsv"
+                (ionChange)="validateBillingForm()"
+                maxlength="4"
+              ></ion-input>
+            </ion-item>
+          </ion-col>
+        </ion-row>
+      </ion-list>
+    </ion-card-content>
+  </ion-card>
+  <ion-card *ngIf="segment === 'billing'">
+    <ion-card-content>
+      <ion-item>
+        <ion-label><small>Agree the Terms</small></ion-label>
+        <ion-checkbox
+          slot="start"
+          value="false"
+          [(ngModel)]="billing.ccAgreement"
+          (ionChange)="validateBillingForm()"
+        ></ion-checkbox>
+      </ion-item>
+    </ion-card-content>
+  </ion-card>
+</ion-content>
+
+<ion-footer>
+  <ion-grid>
+    <ion-row>
+      <ion-col *ngIf="user.role === 'owner'" size="2">
+        <ion-button
+        color="secondary"
+        expand="block"
+        *ngIf="user.role === 'owner'"
+        (click)="onLeftClicked()"
+      >
+        <ion-icon name="caret-back-outline"></ion-icon>
+      </ion-button>
+      </ion-col>
+      <ion-col>
+        <ion-button
+        color="primary"
+        expand="block"
+        value="done"
+        (click)="onSubmitButtonClicked()"
+        [disabled]="!submitEnabled"
+        >SUBMIT</ion-button>
+      </ion-col>
+      <ion-col *ngIf="user.role === 'owner'" size="2">
+        <ion-button
+        color="secondary"
+        expand="block"
+        value="done"
+        (click)="onRightClicked()"
+      >
+        <ion-icon name="caret-forward-outline"></ion-icon>
+      </ion-button>
+      </ion-col>
+    </ion-row>
+  </ion-grid>
+</ion-footer>
